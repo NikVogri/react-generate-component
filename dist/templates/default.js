@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = [
+    'import React from "react";',
+    "\n",
+    "\n",
     "import styles from './{{ComponentName}}.module.scss'",
     "\n",
     "\n",

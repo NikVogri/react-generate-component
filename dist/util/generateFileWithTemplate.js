@@ -31,8 +31,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateFileWithTemplate = void 0;
 const fs = __importStar(require("fs/promises"));
 const generateFileWithTemplate = (path, name, template) => __awaiter(void 0, void 0, void 0, function* () {
-    for (const row of template) {
-        yield fs.appendFile(`${path}/${name}`, row);
+    for (const templateRow of template) {
+        yield fs.appendFile(`${path}/${name}`, templateRow);
     }
 });
 exports.generateFileWithTemplate = generateFileWithTemplate;

@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 import yargs from "yargs";
 
-import { generateFileWithTemplate } from "./util/generateFileWithTemplate";
 import { generateComponentDir } from "./util/generateComponentDir";
-import { generateFile } from "./util/generateFile";
-import { fillTemplate } from "./util/fillTemplate";
+import { checkIfExists } from "./util/checkIfExists";
+import { buildDirPath } from "./util/buildDirPath";
+import { generateComponent } from "./util/generateComponent";
+import { generateComponentModule } from "./util/generateComponentModule";
 
 import template from "./templates/default";
 
@@ -18,11 +19,13 @@ import template from "./templates/default";
 
 	const OUTPUT_DIR = (args.output || "./components/") as string;
 	const COMPONENT_NAME = args.name as string;
+	const componentDirPath = buildDirPath(process.cwd(), OUTPUT_DIR, COMPONENT_NAME);
 
-	const componentDirPath = `${OUTPUT_DIR}/${COMPONENT_NAME}`;
-	await generateComponentDir(componentDirPath);
-	await generateFile(componentDirPath, `${COMPONENT_NAME}.module.scss`);
+	const directoryExists = checkIfExists(componentDirPath);
+	if (!directoryExists) {
+		await generateComponentDir(componentDirPath);
+	}
 
-	const filledTemplate = fillTemplate(template, COMPONENT_NAME);
-	await generateFileWithTemplate(componentDirPath, `${COMPONENT_NAME}.tsx`, filledTemplate);
+	await generateComponent(COMPONENT_NAME, componentDirPath, template);
+	await generateComponentModule(COMPONENT_NAME, componentDirPath);
 })();

@@ -31,6 +31,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateComponentDir = void 0;
 const fs = __importStar(require("fs/promises"));
 const generateComponentDir = (path) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield fs.mkdir(path);
+    yield fs.mkdir(path, { recursive: true });
 });
 exports.generateComponentDir = generateComponentDir;

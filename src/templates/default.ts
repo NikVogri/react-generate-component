@@ -1,4 +1,7 @@
 export default [
+	'import React from "react";',
+	"\n",
+	"\n",
 	"import styles from './{{ComponentName}}.module.scss'",
 	"\n",
 	"\n",

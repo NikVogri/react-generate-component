@@ -14,10 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const yargs_1 = __importDefault(require("yargs"));
-const generateFileWithTemplate_1 = require("./util/generateFileWithTemplate");
 const generateComponentDir_1 = require("./util/generateComponentDir");
-const generateFile_1 = require("./util/generateFile");
-const fillTemplate_1 = require("./util/fillTemplate");
+const checkIfExists_1 = require("./util/checkIfExists");
+const buildDirPath_1 = require("./util/buildDirPath");
+const generateComponent_1 = require("./util/generateComponent");
+const generateComponentModule_1 = require("./util/generateComponentModule");
 const default_1 = __importDefault(require("./templates/default"));
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const args = yield yargs_1.default.argv;
@@ -27,9 +28,11 @@ const default_1 = __importDefault(require("./templates/default"));
     }
     const OUTPUT_DIR = (args.output || "./components/");
     const COMPONENT_NAME = args.name;
-    const componentDirPath = `${OUTPUT_DIR}/${COMPONENT_NAME}`;
-    yield (0, generateComponentDir_1.generateComponentDir)(componentDirPath);
-    yield (0, generateFile_1.generateFile)(componentDirPath, `${COMPONENT_NAME}.module.scss`);
-    const filledTemplate = (0, fillTemplate_1.fillTemplate)(default_1.default, COMPONENT_NAME);
-    yield (0, generateFileWithTemplate_1.generateFileWithTemplate)(componentDirPath, `${COMPONENT_NAME}.tsx`, filledTemplate);
+    const componentDirPath = (0, buildDirPath_1.buildDirPath)(process.cwd(), OUTPUT_DIR, COMPONENT_NAME);
+    const directoryExists = (0, checkIfExists_1.checkIfExists)(componentDirPath);
+    if (!directoryExists) {
+        yield (0, generateComponentDir_1.generateComponentDir)(componentDirPath);
+    }
+    yield (0, generateComponent_1.generateComponent)(COMPONENT_NAME, componentDirPath, default_1.default);
+    yield (0, generateComponentModule_1.generateComponentModule)(COMPONENT_NAME, componentDirPath);
 }))();
