@@ -17,7 +17,7 @@ import template from "./templates/default";
 		return;
 	}
 
-	const OUTPUT_DIR = (args.output || "./components/") as string;
+	const OUTPUT_DIR = (args.path || "./components/") as string;
 	const COMPONENT_NAME = args.name as string;
 	const componentDirPath = buildDirPath(process.cwd(), OUTPUT_DIR, COMPONENT_NAME);
 

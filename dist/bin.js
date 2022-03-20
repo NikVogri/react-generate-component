@@ -26,7 +26,7 @@ const default_1 = __importDefault(require("./templates/default"));
         console.error('ERROR: "name" argument is required, use --name <component-name>.');
         return;
     }
-    const OUTPUT_DIR = (args.output || "./components/");
+    const OUTPUT_DIR = (args.path || "./components/");
     const COMPONENT_NAME = args.name;
     const componentDirPath = (0, buildDirPath_1.buildDirPath)(process.cwd(), OUTPUT_DIR, COMPONENT_NAME);
     const directoryExists = (0, checkIfExists_1.checkIfExists)(componentDirPath);
